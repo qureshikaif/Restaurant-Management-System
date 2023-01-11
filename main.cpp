@@ -11,8 +11,9 @@ struct user_details
     string address;
 } userdetails;
 
-string food_menu[] = {"Pizza", "Burger", "Wraps"};
-int prices[] = {100, 200, 300};
+string food_menu[] = {"Chicken Chowmein", "Crispy Roll", "Cheese Roll","Chicken Burger","Cheesy Chicken Burger","Grilled Chicken Burger","Club Sandwich","Regular Fries","Zinger Burger","Cold Coffee"};
+int sizeofmenu = sizeof(food_menu)/sizeof(food_menu[0]);
+int prices[] = {380,220,200,260,300,320,320,150,320,250};
 float calculated_price;
 int user_choice, user_choice_user, user_choice_manager, user_choice_chef, quantity, order_choice;
 string user_name, user_password;
@@ -21,6 +22,7 @@ void display_menu2();
 float price_calculator(int quantity, int user_choice);
 void user_main_function();
 void proceed_to_order();
+void condition_checker();
 
 int main()
 {
@@ -48,29 +50,35 @@ int main()
                 cout << " |      2) Add Deal            |" << endl;
                 cout << " |      3) Remove Deal         |" << endl;
                 cout << " |      4) Log out             |" << endl;
+                cout << " |      5) Exit                |" << endl;
                 cout << " |                             |" << endl;
                 cout << " ===============================" << endl;
                 cin >> user_choice_manager;
                 if (user_choice_manager == 1)
                 {
+                    display_menu1();
                 }
                 else if (user_choice_manager == 2)
                 {
+                    cout << "Add Deal" << endl;
                 }
                 else if (user_choice_manager == 3)
                 {
+                    cout << "Remove Deal" << endl;
                 }
                 else if (user_choice_manager == 4)
                 {
+                    system("cls");
+                    main();
                 }
                 else if (user_choice_manager == 5)
                 {
-                }
-                else if (user_choice_manager == 6)
-                {
+                    cout << "Program Exited......";
+                    exit(0);
                 }
                 else
                 {
+                    cout << "Option out of context" << endl;
                 }
             }
             else
@@ -126,50 +134,17 @@ int main()
     }
 }
 
-void display_menu1()
-{
-    cout << "Menu is displayed below:" << endl;
-    for (int i = 0; i < 3; i++)
-    {
-        cout << i + 1 << ")"
-             << " " << food_menu[i] << setw(7) << prices[i] << " Rs" << endl;
-    }
-}
-void display_menu2()
-{
-    for (int i = 0; i < 3; i++)
-    {
-        cout << "Press " << i + 1 << " for " << food_menu[i] << endl;
-    }
-}
-float price_calculator(int quantity, int user_choice)
-{
-    if (user_choice == 1)
-    {
-        float total_price = quantity * prices[0];
-        return total_price;
-    }
-    else if (user_choice == 2)
-    {
-        float total_price = quantity * prices[1];
-        return total_price;
-    }
-    else if (user_choice == 3)
-    {
-        float total_price = quantity * prices[2];
-        return total_price;
-    }
-}
 void user_main_function()
 {
+    system("cls");
     cout << " ===============================" << endl;
     cout << " |                             |" << endl;
     cout << " |  Choose from the following  |" << endl;
     cout << " |      1) View Menu           |" << endl;
     cout << " |      2) Place Order         |" << endl;
     cout << " |      3) View Order          |" << endl;
-    cout << " |      5) Go Back             |" << endl;
-    cout << " |      6) Exit                |" << endl;
+    cout << " |      4) Go Back             |" << endl;
+    cout << " |      5) Exit                |" << endl;
     cout << " |                             |" << endl;
     cout << " ===============================" << endl;
     cin >> user_choice_user;
@@ -186,22 +161,7 @@ void user_main_function()
         }
         else if (user_choice_user == 2)
         {
-            char user_choice;
-            cout << "Press Y to go back to main menu or Press N to terminate the program." << endl;
-            cin >> user_choice;
-            if (user_choice == 'Y' || user_choice == 'y')
-            {
-                system("cls");
-                main();
-            }
-            else if (user_choice == 'N' || user_choice == 'n')
-            {
-                exit(0);
-            }
-            else
-            {
-                cout << "Invalid choice." << endl;
-            }
+            condition_checker();
         }
         else
         {
@@ -211,7 +171,7 @@ void user_main_function()
     }
     else if (user_choice_user == 2)
     {
-        cout << "ORDER" << endl;
+        proceed_to_order();
     }
     else if (user_choice_user == 3)
     {
@@ -219,14 +179,13 @@ void user_main_function()
     }
     else if (user_choice_user == 4)
     {
-        cout << "ORDER STATUS" << endl;
+        system("cls");
+        main();
     }
     else if (user_choice_user == 5)
     {
-        main();
-    }
-    else if (user_choice_user == 6)
-    {
+        cout << "Program exited.....";
+        exit(0);
     }
     else
     {
@@ -234,9 +193,52 @@ void user_main_function()
         cout << "Try again" << endl;
     }
 }
+
+void display_menu1()
+{
+    cout << "Menu is displayed below:" << endl;
+    for (int i = 0; i < sizeofmenu; i++)
+    {
+        cout << i + 1 << ")"
+             << " " << food_menu[i] << setw(15) << prices[i] << " Rs" << endl;
+    }
+}
+void display_menu2()
+{
+    for (int i = 0; i < sizeofmenu; i++)
+    {
+        cout << "Press " << i + 1 << " for " << food_menu[i] << endl;
+    }
+}
+void condition_checker() {
+    char user_choice;
+            cout << "Press Y to go back to main menu or Press N to terminate the program." << endl;
+            cin >> user_choice;
+            if (user_choice == 'Y' || user_choice == 'y')
+            {
+                system("cls");
+                main();
+            }
+            else if (user_choice == 'N' || user_choice == 'n')
+            {
+                cout << "Program Exited......";
+                exit(0);
+                
+            }
+            else
+            {
+                cout << "Invalid choice." << endl;
+            }
+            user_choice=0;
+}
+float price_calculator(int quantity, int user_choice)
+{
+        float total_price = quantity * prices[user_choice-1];
+        return total_price;
+}
+
 void proceed_to_order()
 {
-
     cout << "Enter your full name: " << endl;
     getline(cin, userdetails.name);
     cin.ignore(1000, '\n');
@@ -247,11 +249,19 @@ void proceed_to_order()
     cout << "Enter your address: " << endl;
     getline(cin, userdetails.address);
     cin.ignore(1000, '\n');
+    cout << "\n";
     cout << "Place your order: " << endl;
     display_menu2();
     cin >> order_choice;
-    cout << "Enter your quantity: " << endl;
-    cin >> quantity;
-    calculated_price = price_calculator(quantity, order_choice);
-    cout << "Your total price is: " << calculated_price;
+    if(order_choice>sizeofmenu) {
+        cout << "Invalid order";
+    }
+    else {
+        cout << "Enter your quantity: " << endl;
+        cin >> quantity;
+        calculated_price = price_calculator(quantity, order_choice);
+        cout << "Your total price is: " << calculated_price << endl;
+        cout << "Thank You for using our services." << endl;
+    }
+    
 }
