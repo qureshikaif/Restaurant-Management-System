@@ -11,9 +11,8 @@ struct user_details
     string address;
 } userdetails;
 
-string food_menu[] = {"Chicken Chowmein", "Crispy Roll", "Cheese Roll","Chicken Burger","Cheesy Chicken Burger","Grilled Chicken Burger","Club Sandwich","Regular Fries","Zinger Burger","Cold Coffee"};
-int sizeofmenu = sizeof(food_menu)/sizeof(food_menu[0]);
-int prices[] = {380,220,200,260,300,320,320,150,320,250};
+string food_menu[11] = {"Chicken Chowmein", "Crispy Roll", "Cheese Roll","Chicken Burger","Cheesy Chicken Burger","Grilled Chicken Burger","Club Sandwich","Regular Fries","Zinger Burger","Cold Coffee"};
+int prices[11] = {380,220,200,260,300,320,320,150,320,250};
 float calculated_price;
 int user_choice, user_choice_user, user_choice_manager, user_choice_chef, quantity, order_choice;
 string user_name, user_password;
@@ -23,6 +22,7 @@ float price_calculator(int quantity, int user_choice);
 void user_main_function();
 void proceed_to_order();
 void condition_checker();
+void manager_main_function();
 
 int main()
 {
@@ -36,50 +36,14 @@ int main()
     {
     label_1:
         cout << "Enter Username: ";
-        getline(cin, user_name);
+        cin >> user_name;
         if (user_name == "admin" || user_name == "ADMIN")
         {
             cout << "Enter Password: ";
-            getline(cin, user_password);
+            cin >> user_password;
             if (user_password == "admin" || user_password == "ADMIN")
             {
-                cout << " ===============================" << endl;
-                cout << " |                             |" << endl;
-                cout << " |  Choose from the following  |" << endl;
-                cout << " |      1) View Menu           |" << endl;
-                cout << " |      2) Add Deal            |" << endl;
-                cout << " |      3) Remove Deal         |" << endl;
-                cout << " |      4) Log out             |" << endl;
-                cout << " |      5) Exit                |" << endl;
-                cout << " |                             |" << endl;
-                cout << " ===============================" << endl;
-                cin >> user_choice_manager;
-                if (user_choice_manager == 1)
-                {
-                    display_menu1();
-                }
-                else if (user_choice_manager == 2)
-                {
-                    cout << "Add Deal" << endl;
-                }
-                else if (user_choice_manager == 3)
-                {
-                    cout << "Remove Deal" << endl;
-                }
-                else if (user_choice_manager == 4)
-                {
-                    system("cls");
-                    main();
-                }
-                else if (user_choice_manager == 5)
-                {
-                    cout << "Program Exited......";
-                    exit(0);
-                }
-                else
-                {
-                    cout << "Option out of context" << endl;
-                }
+                manager_main_function();
             }
             else
             {
@@ -124,7 +88,6 @@ int main()
     }
     else if (user_choice == 3)
     {
-    label_exit:
         cout << "Program exited........";
         exit(0);
     }
@@ -133,7 +96,73 @@ int main()
         cout << "Invalid Choice" << endl;
     }
 }
-
+void manager_main_function () {
+    system("cls");
+                cout << " ===============================" << endl;
+                cout << " |                             |" << endl;
+                cout << " |  Choose from the following  |" << endl;
+                cout << " |      1) View Menu           |" << endl;
+                cout << " |      2) Add Deal            |" << endl;
+                cout << " |      3) Remove Deal         |" << endl;
+                cout << " |      4) Log out             |" << endl;
+                cout << " |      5) Exit                |" << endl;
+                cout << " |                             |" << endl;
+                cout << " ===============================" << endl;
+                cin >> user_choice_manager;
+                if (user_choice_manager == 1)
+                {
+                    display_menu1();
+                    condition_checker();
+                }
+                else if (user_choice_manager == 2)
+                {
+                    display_menu1();
+                    cout << "Add a new deal" << endl;
+                    cout << "Add the title of your deal" << endl;
+                    cin >> food_menu[10];
+                    cout << "Add the price of your deal" << endl;
+                    cin >> prices[10];
+                    cout << "New meal added" << endl;
+                    condition_checker();
+                }
+                else if (user_choice_manager == 3)
+                {
+                    string choice;
+                    display_menu1();
+                    cout << "Remove Deal" << endl;
+                    cout << "YOU CAN ONLY REMOVE THE DEAL YOU ADDED MANUALLY" << endl;
+                    cout << "Remove the last deal?" << endl;
+                    cout << "Press Y for Yes, N for No" << endl;
+                    cin >> choice;
+                    if(choice == "Y" || choice == "y") {
+                        food_menu[10] = "\0";
+                        prices[10]=0;
+                        cout << "Deal Removed" << endl;
+                        condition_checker();
+                    }
+                    else if(choice == "N" || choice == "n") {
+                        condition_checker();
+                    }
+                    else {
+                        cout << "Option out of context" << endl;
+                        condition_checker();
+                    }
+                }
+                else if (user_choice_manager == 4)
+                {
+                    system("cls");
+                    main();
+                }
+                else if (user_choice_manager == 5)
+                {
+                    cout << "Program Exited......";
+                    exit(0);
+                }
+                else
+                {
+                    cout << "Option out of context" << endl;
+                }
+}
 void user_main_function()
 {
     system("cls");
@@ -197,17 +226,29 @@ void user_main_function()
 void display_menu1()
 {
     cout << "Menu is displayed below:" << endl;
-    for (int i = 0; i < sizeofmenu; i++)
+    for (int i = 0; i <11; i++)
     {
-        cout << i + 1 << ")"
+        if(food_menu[i]=="\0") {
+            cout << "\0";
+        }
+        else { 
+            cout << i + 1 << ")"
              << " " << food_menu[i] << setw(15) << prices[i] << " Rs" << endl;
+        }
+        
     }
 }
 void display_menu2()
 {
-    for (int i = 0; i < sizeofmenu; i++)
+    for (int i = 0; i <11; i++)
     {
-        cout << "Press " << i + 1 << " for " << food_menu[i] << endl;
+        if(food_menu[i]=="\0") {
+            cout << "\0";
+        }
+        else {
+            cout << "Press " << i + 1 << " for " << food_menu[i] << endl;
+        }
+        
     }
 }
 void condition_checker() {
@@ -236,7 +277,6 @@ float price_calculator(int quantity, int user_choice)
         float total_price = quantity * prices[user_choice-1];
         return total_price;
 }
-
 void proceed_to_order()
 {
     cout << "Enter your full name: " << endl;
@@ -253,7 +293,7 @@ void proceed_to_order()
     cout << "Place your order: " << endl;
     display_menu2();
     cin >> order_choice;
-    if(order_choice>sizeofmenu) {
+    if(order_choice>20) {
         cout << "Invalid order";
     }
     else {
@@ -262,6 +302,7 @@ void proceed_to_order()
         calculated_price = price_calculator(quantity, order_choice);
         cout << "Your total price is: " << calculated_price << endl;
         cout << "Thank You for using our services." << endl;
+        condition_checker();
     }
     
 }
